@@ -2,17 +2,16 @@
 
 import numpy as np
 
-# Calculate the euclidian distance in n-space of the route r traversing cities c, ending at the path start.
-#path_distance = lambda r,c: np.sum([np.linalg.norm(c[r[p]]-c[r[p-1]]) for p in range(len(r))])
-# Reverse the order of all elements from element i to element k in array r.
+# Calculate the euclidian distance in n-space of the route r traversing cities
+#c, ending at the path start. path_distance = lambda r,c:
+# np.sum([np.linalg.norm(c[r[p]]-c[r[p-1]]) for p in range(len(r))]) Reverse the
+# order of all elements from element i to element k in array r.
 two_opt_swap = lambda r,i,k: np.concatenate((r[0:i],r[k:-len(r)+i-1:-1],r[k+1:len(r)]))
 
 
-def two_opt(xs,ys,improvement_threshold): # 2-opt Algorithm adapted from https://en.wikipedia.org/wiki/2-opt
+def two_opt(xs,ys,improvement_threshold): 
+    # 2-opt Algorithm adapted from https://en.wikipedia.org/wiki/2-opt
     
-    #xx = [p.position.x for p in cities]
-    #yy = [p.position.y for p in cities]
-
     xx, yy = np.meshgrid(xs,ys)
     dd = np.sqrt( (xx-xx.T)**2 + (yy-yy.T)**2)
     
@@ -22,7 +21,6 @@ def two_opt(xs,ys,improvement_threshold): # 2-opt Algorithm adapted from https:/
     improvement_factor = 1 # Initialize the improvement factor.
     #best_distance = path_distance(route,cities) # Calculate the distance of the initial path.
     best_distance = np.sum(dd[route[:-1],route[1:]])
-
 
     while improvement_factor > improvement_threshold: # If the route is still improving, keep going!
 
@@ -111,8 +109,7 @@ def two_opt_lines(x1s,y1s,x2s,y2s,improvement_threshold):
     best_distance += np.sum(dd[0,route[odd[0]]] + dd[route[odd[1:]],route[odd[1:]-1]] + dd[route[odd[1:]-1],route[odd[1:]+1]])
  
     #best_distance = np.sum(dd[route[:-1],route[1:]])
- 
- 
+  
     while improvement_factor > improvement_threshold: # If the route is still improving, keep going!
 
         distance_to_beat = best_distance # Record the distance at the beginning of the loop.
